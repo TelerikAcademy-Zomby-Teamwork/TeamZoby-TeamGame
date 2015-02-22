@@ -1,0 +1,6 @@
+C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionFrog\bin\Debug\CurrentVersionFrog.exe.config
+C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionFrog\obj\Debug\CurrentVersionFrog.csprojResolveAssemblyReference.cache
+C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionFrog\bin\Debug\CurrentVersionFrog.exe
+C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionFrog\bin\Debug\CurrentVersionFrog.pdb
+C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionFrog\obj\Debug\CurrentVersionFrog.exe
+C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionFrog\obj\Debug\CurrentVersionFrog.pdb
