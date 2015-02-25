@@ -4,3 +4,9 @@ C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionF
 C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionFrog\bin\Debug\CurrentVersionFrog.pdb
 C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionFrog\obj\Debug\CurrentVersionFrog.exe
 C:\Users\Тито\Documents\Visual Studio 2013\Projects\FrogGame\CurrentVersionFrog\obj\Debug\CurrentVersionFrog.pdb
+C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\bin\Debug\CurrentVersionFrog.exe.config
+C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\bin\Debug\CurrentVersionFrog.exe
+C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\bin\Debug\CurrentVersionFrog.pdb
+C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.csprojResolveAssemblyReference.cache
+C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.exe
+C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.pdb

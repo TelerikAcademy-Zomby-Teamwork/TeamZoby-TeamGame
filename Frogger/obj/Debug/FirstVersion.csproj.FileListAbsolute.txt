@@ -1,0 +1,3 @@
+C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\Frogger\bin\Debug\Frogger.exe.config
+C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\Frogger\obj\Debug\Frogger.exe
+C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\Frogger\obj\Debug\Frogger.pdb
