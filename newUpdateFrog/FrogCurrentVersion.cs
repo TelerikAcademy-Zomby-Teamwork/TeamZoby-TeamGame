@@ -3,12 +3,17 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Lifetime;
 using System.Threading;
+using System.IO;
 
-class CurrentVersionFrog
+class FrogCurrentVersion
 {
     // ???? ?? ? ????????? ????? ?? ?????? ? ?????????????
+    static int lives = 5;
+    static int score = 0;
+    
     public struct Object
     {
+        
         public int x;
         public int y;
         public string c;
@@ -24,21 +29,20 @@ class CurrentVersionFrog
 
     public static void FillGrass(char[,] grass)
     {
-
         for (int i = 0; i < grass.GetLength(0); i++)
         {
             for (int j = 0; j < grass.GetLength(1); j++)
             {
                 grass[i, j] = '#';
-                grass[1, 0] = ' ';
+                grass[1, 1] = ' ';
                 grass[1, 7] = ' ';
                 grass[1, 15] = ' ';
                 grass[1, 22] = ' ';
-                grass[1, 29] = ' ';
+                grass[1, 28] = ' ';
             }
         }
-
-    }//  fill the grass array 
+    }
+    //  fill the grass array 
     public static void DrawTheGrass(char[,] grass)
     {
         Console.ForegroundColor = ConsoleColor.Green;
@@ -49,7 +53,6 @@ class CurrentVersionFrog
                 Console.Write(grass[i, j]);
             }
         }
-
     } //draw grass
 
     public static void DrawSafetyZone(int scoreWindowBuffer)
@@ -73,7 +76,6 @@ class CurrentVersionFrog
         Console.Write(new string('=', Console.WindowWidth));
         Console.Write(new string('=', Console.WindowWidth));
         Console.Write(new string('=', Console.WindowWidth));
-
     }
     public static int[] Moves1(Object frog, int[] data, int scoreWindowBuffer)
     {
@@ -99,8 +101,6 @@ class CurrentVersionFrog
                 {
                     Console.WriteLine();
                     data[0] = 1;
-
-
                 }
             }
             if (pressedKey.Key == ConsoleKey.LeftArrow)
@@ -132,13 +132,12 @@ class CurrentVersionFrog
                 }
             }
         }
-
         data[1] = frog.x;
         data[2] = frog.y;
         return data;
     }//move frog and chek for over 
 
-    public static void PrintOnPosition(int x, int y, string c, ConsoleColor color)
+    public static void PrintOnPosition(int x, int y, string c = "", ConsoleColor color = ConsoleColor.Gray)
     {
         Console.SetCursorPosition(x, y);
         Console.ForegroundColor = color;
@@ -164,7 +163,7 @@ class CurrentVersionFrog
             }
             if (counter == 1)
             {
-                cars.Add(new Object(col, rowCounter, middleCars, ConsoleColor.Yellow));
+                cars.Add(new Object(col, rowCounter, middleCars, ConsoleColor.DarkCyan));
             }
             if (counter == 2)
             {
@@ -179,42 +178,36 @@ class CurrentVersionFrog
                 col = 0;
                 switch (carCount / 3)
                 {
-                    case 0: col = 5;
-                        break;
-                    case 1: col = 5;
-
-                        break;
-                    case 2: col = 4;
-
-                        break;
-                    case 3: col = 0;
-                        break;
-                    case 4:
-                        col = 6;
-                        break;
-                    case 5: col = 0;
-                        break;
-                    case 6: col = 7;
-                        break;
-                    default: col = 0;
-                        break;
+                    case 0: col = 5; break;
+                    case 1: col = 5; break;
+                    case 2: col = 4; break;
+                    case 3: col = 0; break;
+                    case 4: col = 6; break;
+                    case 5: col = 0; break;
+                    case 6: col = 7; break;
+                    default: col = 0; break;
                 }
-
-
                 counter++;
                 if (counter > 2)
                 {
                     counter = 0;
                 }
-
             }
-
-
         }
+    }
+    static void GameOver()
+    {
+        Console.Clear();
+        PrintOnPosition(8, 5, "Game Over!", ConsoleColor.Red);
+        PrintOnPosition(6, 6, "Your score is " + score, ConsoleColor.Red);
+        PrintOnPosition(4, 7, "Press [enter] for exit", ConsoleColor.Red);
+        Console.ReadLine();
+        Environment.Exit(0);
     }
 
     static void Main()
     {
+        
         Console.BufferHeight = Console.WindowHeight = 18;
         Console.BufferWidth = Console.WindowWidth = 30;
         int n = Console.WindowWidth;
@@ -222,10 +215,9 @@ class CurrentVersionFrog
         char[,] grass = new char[2, n];// grass array 
         FillGrass(grass);// 
 
-
         int scoreWindowBuffer = 4;
-        // ???? ??????? ? ????? ?? ?? ???????? ???????? ?? ??????
 
+        // ???? ??????? ? ????? ?? ?? ???????? ???????? ?? ??????
         Object frog = new Object();
         frog.x = Console.WindowWidth / 2;
         frog.y = Console.WindowHeight - scoreWindowBuffer;
@@ -243,26 +235,23 @@ class CurrentVersionFrog
 
         DrawWater();
 
-
-
-
-
-
-
-
         while (true)
         {
+            // TODO:
+            // check if frog is in the grass matrix
+            //if (frog.x == !!! && frog.y == !!!)
+            //{
+            //    score += 50;
+            //}
 
             Moves1(frog, data, scoreWindowBuffer);
             if (data[0] == 1)//chek for exit 0=exit
             {
                 return;
-
             }
 
             // Move our frog
             // Move obstacles
-            // Collision detection
             Console.Clear();
 
             DrawTheGrass(grass);// print grass
@@ -279,69 +268,61 @@ class CurrentVersionFrog
                 c = cars[i].c;
                 color = cars[i].color;
 
-
                 cars.Remove(cars[i]);
                 cars.Insert(i, new Object(x, y, c, color));
-
             }
 
             // check if the car is in the end of the console window and print it in the begging of the console. remove car and add other with new cordinates//
             for (int i = 0; i < cars.Count; i++)
             {
-                if (cars[i].x == Console.WindowWidth -2 -cars[i].c.Length)
+                if (cars[i].x == Console.WindowWidth - 2 - cars[i].c.Length)
                 {
                     x = 0;
                     y = cars[i].y;
-                   
                     c = cars[i].c;
                     color = cars[i].color;
                     cars.Remove(cars[i]);
                     cars.Insert(i, new Object(x, y, c, color));
-
                 }
-
-
             }
-            // colusion detection //////////////////////////////////
 
+            // colusion detection //////////////////////////////////
             foreach (var car in cars)
             {
                 carCord = car.x;
                 frogCord = frog.x;
 
-                if (car.c.Length==3)
+                if (car.c.Length == 3)
                 {
-
-
-
-                    if ((carCord == frogCord && car.y == frog.y) || (frogCord == (carCord - 1) && frog.y == car.y) || (frogCord == (carCord - 2) && frog.y == car.y))
+                    if ((frogCord == (carCord + 1) && frog.y == car.y) || (frogCord == (carCord - 1) && frog.y == car.y) || (frogCord == (carCord - 2) && frog.y == car.y))
                     {
-
+                        if (lives == 0) GameOver();
                         Console.Clear();
-                        Console.WriteLine("you are dead ");
+                        PrintOnPosition(8, 5, "You are dead", ConsoleColor.Red);
                         Thread.Sleep(1000);
                         frog.x = Console.WindowWidth / 2;
                         frog.y = Console.WindowHeight - scoreWindowBuffer;
+                        lives--;  
                     }
                 }
-
 
                 if (car.c.Length == 2)
                 {
-
-
-
-                    if ((carCord == frogCord && car.y == frog.y) || (frogCord == (carCord - 1) && frog.y == car.y))
+                    if ((frogCord == carCord && frog.y == car.y) || (frogCord == (carCord - 1) && frog.y == car.y))
                     {
-
+                        if (lives == 0) GameOver();
                         Console.Clear();
-                        Console.WriteLine("you are dead ");
+                        PrintOnPosition(10, 5, "You are dead", ConsoleColor.Red);
                         Thread.Sleep(1000);
                         frog.x = Console.WindowWidth / 2;
                         frog.y = Console.WindowHeight - scoreWindowBuffer;
+                        lives--;
                     }
                 }
             }
+            // print score window
+            PrintOnPosition(0, Console.WindowHeight - 3, "Lives: " + lives, ConsoleColor.Cyan);
+            PrintOnPosition(0, Console.WindowHeight - 2, "Score: " + score, ConsoleColor.Cyan);
 
             Thread.Sleep(300);
         }
