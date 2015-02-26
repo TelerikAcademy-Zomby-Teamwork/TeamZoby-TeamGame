@@ -10,3 +10,9 @@ C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\bin\Debug\Curren
 C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.csprojResolveAssemblyReference.cache
 C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.exe
 C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.pdb
+C:\Users\n.stefanov\Desktop\TeamZombie-Game-master\newUpdateFrog\bin\Debug\CurrentVersionFrog.exe.config
+C:\Users\n.stefanov\Desktop\TeamZombie-Game-master\newUpdateFrog\obj\Debug\CurrentVersionFrog.exe
+C:\Users\n.stefanov\Desktop\TeamZombie-Game-master\newUpdateFrog\obj\Debug\CurrentVersionFrog.pdb
+C:\Users\n.stefanov\Desktop\TeamZombie-Game-master\newUpdateFrog\bin\Debug\CurrentVersionFrog.exe
+C:\Users\n.stefanov\Desktop\TeamZombie-Game-master\newUpdateFrog\bin\Debug\CurrentVersionFrog.pdb
+C:\Users\n.stefanov\Desktop\TeamZombie-Game-master\newUpdateFrog\obj\Debug\CurrentVersionFrog.csprojResolveAssemblyReference.cache
