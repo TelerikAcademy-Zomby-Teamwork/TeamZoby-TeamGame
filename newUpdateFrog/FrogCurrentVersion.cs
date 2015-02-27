@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Remoting.Lifetime;
 using System.Threading;
 using System.IO;
+using System.Media;
 
 class FrogCurr
 {
@@ -218,6 +219,9 @@ class FrogCurr
 
     static void GameOver()
     {
+        SoundPlayer gameOver = new System.Media.SoundPlayer("GameOver.wav");
+        gameOver.Play();
+
         Console.Clear();
         PrintOnPosition(8, 5, "Game Over!", ConsoleColor.Red);
         PrintOnPosition(6, 6, "Your score is " + score, ConsoleColor.Red);
@@ -227,7 +231,11 @@ class FrogCurr
     }
 
     static void Died()
+
     {
+        SoundPlayer backgroundMusic = new System.Media.SoundPlayer("Background.wav");
+
+        backgroundMusic.Play();
         Console.Clear();
         PrintOnPosition(10, 5, "You are dead", ConsoleColor.Red);
         Thread.Sleep(1000);
@@ -236,6 +244,9 @@ class FrogCurr
 
     static void Lived()
     {
+        SoundPlayer backgroundMusic = new System.Media.SoundPlayer("Background.wav");
+
+        backgroundMusic.Play();
         Console.Clear();
         score += 50;
         PrintOnPosition(10, 5, "Hooray!!!!", ConsoleColor.Red);
@@ -243,6 +254,8 @@ class FrogCurr
     }
     static void Finish()
     {
+        SoundPlayer win = new System.Media.SoundPlayer("Win.wav");
+        win.Play();
         Console.Clear();
         PrintOnPosition(8, 5, "You win!", ConsoleColor.Red);
         PrintOnPosition(6, 6, "Your score is " + score, ConsoleColor.Red);
@@ -257,6 +270,8 @@ class FrogCurr
     static void Main()
     {
 
+        SoundPlayer backgroundMusic = new System.Media.SoundPlayer("Background.wav");
+        backgroundMusic.Play();
         Console.BufferHeight = Console.WindowHeight = 22;
         Console.BufferWidth = Console.WindowWidth = 30;
         int n = Console.WindowWidth;
