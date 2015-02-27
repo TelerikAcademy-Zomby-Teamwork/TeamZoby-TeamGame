@@ -61,7 +61,7 @@ class FrogCurr
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.Write(new string('=', Console.WindowWidth));
 
-        Console.SetCursorPosition(0, Console.WindowHeight / 2 - scoreWindowBuffer + 2);
+        Console.SetCursorPosition(0, Console.WindowHeight / 2 - scoreWindowBuffer + 4);
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.Write(new string('=', Console.WindowWidth));
     }// draw safety zone 
@@ -71,14 +71,14 @@ class FrogCurr
         Console.ResetColor();
         Console.SetCursorPosition(0, 2);
         Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write(new string('=', Console.WindowWidth));
-        Console.Write(new string('=', Console.WindowWidth));
-        Console.Write(new string('=', Console.WindowWidth));
-        Console.Write(new string('=', Console.WindowWidth));
-        Console.Write(new string('=', Console.WindowWidth));
+        for (int i = 0; i < 9; i++)
+        {
+            Console.Write(new string('=', Console.WindowWidth));
+        }
     }
-    public static int[] Moves1(Object frog, int[] data, int scoreWindowBuffer)
+    public static int[] Moves(Object frog, int[] data, int scoreWindowBuffer)
     {
+
         if (Console.KeyAvailable)
         {
             ConsoleKeyInfo pressedKey = Console.ReadKey(true);
@@ -105,6 +105,8 @@ class FrogCurr
             }
             if (pressedKey.Key == ConsoleKey.LeftArrow)
             {
+
+
                 if (frog.x >= 1)
                 {
                     frog.x--;
@@ -112,6 +114,8 @@ class FrogCurr
             }
             else if (pressedKey.Key == ConsoleKey.RightArrow)
             {
+
+
                 if (frog.x < Console.WindowWidth - 1)
                 {
                     frog.x++;
@@ -119,6 +123,8 @@ class FrogCurr
             }
             else if (pressedKey.Key == ConsoleKey.Spacebar)// specila jump forward
             {
+
+
                 if (frog.y > 1)
                 {
                     frog.y -= 2;
@@ -126,6 +132,7 @@ class FrogCurr
             }
             else if (pressedKey.Key == ConsoleKey.B)// specila jump backward
             {
+
                 if (frog.y < Console.WindowHeight - scoreWindowBuffer - 1)
                 {
                     frog.y += 2;
@@ -134,6 +141,8 @@ class FrogCurr
 
             else if (pressedKey.Key == ConsoleKey.DownArrow)
             {
+
+
                 if (frog.y < Console.WindowHeight - scoreWindowBuffer)
                 {
                     frog.y++;
@@ -141,6 +150,8 @@ class FrogCurr
             }
             else if (pressedKey.Key == ConsoleKey.UpArrow)
             {
+
+
                 if (frog.y >= 1)
                 {
                     frog.y--;
@@ -211,59 +222,14 @@ class FrogCurr
         }
     }
 
-    public static void FillListOfWoods(List<Object> woods, int scoreWindowBuffer)
+    public static void Rocks(List<Object> objects)
     {
-        int rowCounter = 6;
-        byte woodCount = 0;
 
-
-        string bigWoods = "0000";
-
-        byte counter = 0;
-        byte col = 0;
-
-        for (int i = 0; i < 15; i++)
-        {
-            if (counter == 0)
-            {
-                woods.Add(new Object(col, rowCounter, bigWoods, ConsoleColor.DarkRed));
-            }
-            if (counter == 1)
-            {
-                woods.Add(new Object(col, rowCounter, bigWoods, ConsoleColor.DarkMagenta));
-            }
-            if (counter == 2)
-            {
-                woods.Add(new Object(col, rowCounter, bigWoods, ConsoleColor.White));
-            }
-            col += 8;
-
-            woodCount++;
-            if (woodCount % 3 == 0)
-            {
-                rowCounter--;
-                col = 0;
-                switch (woodCount / 3)
-                {
-                    case 0: col = 4; break;
-                    case 1: col = 2; break;
-                    case 2: col = 3; break;
-                    case 3: col = 2; break;
-                    case 4: col = 4; break;
-                    case 5: col = 1; break;
-                    case 6: col = 4; break;
-                    default: col = 3; break;
-                }
-                counter++;
-                if (counter > 2)
-                {
-                    counter = 0;
-                }
-            }
-        }
     }
     static void GameOver()
     {
+        System.Media.SoundPlayer gameOver = new System.Media.SoundPlayer(@"C:\Game_Over_-_sound_effect.wav");
+        gameOver.Play();
         Console.Clear();
         PrintOnPosition(8, 5, "Game Over!", ConsoleColor.Red);
         PrintOnPosition(6, 6, "Your score is " + score, ConsoleColor.Red);
@@ -274,6 +240,10 @@ class FrogCurr
 
     static void Died()
     {
+        System.Media.SoundPlayer backgroundMusic = new System.Media.SoundPlayer(@"C:\Retro_Arcade_Ghost_Background.wav");
+
+        backgroundMusic.Play();
+
         Console.Clear();
         PrintOnPosition(10, 5, "You are dead", ConsoleColor.Red);
         Thread.Sleep(1000);
@@ -282,8 +252,10 @@ class FrogCurr
 
     static void Main()
     {
+        System.Media.SoundPlayer backgroundMusic = new System.Media.SoundPlayer(@"C:\Retro_Arcade_Ghost_Background.wav");
+        backgroundMusic.Play();
 
-        Console.BufferHeight = Console.WindowHeight = 18;
+        Console.BufferHeight = Console.WindowHeight = 22;
         Console.BufferWidth = Console.WindowWidth = 30;
         int n = Console.WindowWidth;
 
@@ -291,6 +263,7 @@ class FrogCurr
         FillGrass(grass);// 
 
         int scoreWindowBuffer = 4;
+        int rockField = 9;
 
         Object frog = new Object();
         frog.x = Console.WindowWidth / 2;
@@ -298,45 +271,86 @@ class FrogCurr
         frog.c = "X";
         frog.color = ConsoleColor.Yellow;
         int[] data = new int[3] { 0, frog.x, frog.y };
+
+        List<Object> rocks = new List<Object>();
+
         List<Object> cars = new List<Object>(18);
-        List<Object> woods = new List<Object>(12);
         FillListOfCars(cars, scoreWindowBuffer);
-        FillListOfWoods(woods, scoreWindowBuffer);
+
+        Random randomGenerator = new Random();
+
         int x;
         int y;
         string c;
-        int frogCord;
-        int carCord;
-        int woodCord;
         ConsoleColor color;
-
-        DrawWater();
 
         while (true)
         {
-            // TODO:
-            // check if frog is in the grass matrix
-            //if (frog.x == !!! && frog.y == !!!)
+            // TODO: FINISH to be fixed
+            //if ((frog.x == 1 && frog.y == 1) || (frog.x == 7 && frog.y == 1) || (frog.x == 15 && frog.y == 1) || (frog.x == 22 && frog.y == 1) || (frog.x == 28 && frog.y == 1))
             //{
+            //    Console.WriteLine("YES");
+            //    Thread.Sleep(300);
             //    score += 50;
             //}
 
-            Moves1(frog, data, scoreWindowBuffer);
+            // Move frog
+            Moves(frog, data, scoreWindowBuffer);
             if (data[0] == 1)//chek for exit 0=exit
             {
                 return;
             }
 
-            // Move our frog
-            // Move obstacles
-            Console.Clear();
 
+            // Rocks
+            Object newRock = new Object();
+            newRock.color = ConsoleColor.DarkGray;
+            newRock.x = randomGenerator.Next(0, Console.WindowWidth - 1);
+            newRock.y = 1;
+            newRock.c = "###";
+            rocks.Add(newRock);
+
+
+            List<Object> newList = new List<Object>();
+            for (int i = 0; i < rocks.Count; i++)
+            {
+                Object oldRock = rocks[i];
+                Object movingRocks = new Object();
+                movingRocks.x = oldRock.x;
+                if (oldRock.y > 9) continue;
+                else movingRocks.y = oldRock.y + 1;
+
+                movingRocks.c = oldRock.c;
+                movingRocks.color = oldRock.color;
+                if (movingRocks.c == "#" && oldRock.y == frog.y && oldRock.x == frog.x)
+                {
+                    if (lives == 0) GameOver();
+                    Died();
+                    frog.x = Console.WindowWidth / 2;
+                    frog.y = Console.WindowHeight - scoreWindowBuffer;
+                }
+                if (movingRocks.y < Console.WindowHeight)
+                {
+                    newList.Add(movingRocks);
+                }
+            }
+            rocks = newList;
+
+
+
+            Console.Clear();
             DrawTheGrass(grass);// print grass
             DrawSafetyZone(scoreWindowBuffer);// print save zone 
             DrawWater();//draw water
 
+            // Print the rocks
+            foreach (Object car in rocks)
+            {
+                PrintOnPosition(car.x, car.y, car.c, car.color);
+            }
 
-            for (int i = 0; i < cars.Count; i++)// move cars
+            // Move the cars
+            for (int i = 0; i < cars.Count; i++)
             {
                 PrintOnPosition(cars[i].x, cars[i].y, cars[i].c, cars[i].color);
                 x = cars[i].x;
@@ -349,34 +363,6 @@ class FrogCurr
                 cars.Insert(i, new Object(x, y, c, color));
             }
 
-            for (int i = 0; i < woods.Count; i++)// move woods
-            {
-                if (woods[i].x < Console.WindowWidth - woods[i].c.Length - 3 && woods[i].y % 2 == 0)
-                {
-                    PrintOnPosition(woods[i].x, woods[i].y, woods[i].c, woods[i].color);
-                    x = woods[i].x;
-                    x += 2;
-                    y = woods[i].y;
-                    c = woods[i].c;
-                    color = woods[i].color;
-
-                    woods.Remove(woods[i]);
-                    woods.Insert(i, new Object(x, y, c, color));
-
-                }
-                else
-                {
-                    PrintOnPosition(woods[i].x, woods[i].y, woods[i].c, woods[i].color);
-                    x = woods[i].x;
-                    x++;
-                    y = woods[i].y;
-                    c = woods[i].c;
-                    color = woods[i].color;
-
-                    woods.Remove(woods[i]);
-                    woods.Insert(i, new Object(x, y, c, color));
-                }
-            }
 
             // check if the car is in the end of the console window and print it in the begging of the console. remove car and add other with new cordinates//
             for (int i = 0; i < cars.Count; i++)
@@ -392,29 +378,30 @@ class FrogCurr
                 }
             }
 
-            for (int i = 0; i < woods.Count; i++)// check if the wood is in the end of the console window and print it in the begging of the console. remove car and add other with new cordinates//
+            // print the  frog
+            PrintOnPosition(frog.x = data[1], frog.y = data[2], frog.c, frog.color);
+
+            // collusion detection//////////////////////////////////
+            foreach (var rock in rocks)
             {
-                if (woods[i].x == Console.WindowWidth + 1 - woods[i].c.Length)
+                int rockCord = rock.x;
+
+                if ((frog.x == rockCord && frog.y == rock.y) || (frog.x == rockCord + 1 && frog.y == rock.y) || (frog.x == rockCord + 2 && frog.y == rock.y))
                 {
-                    x = 0;
-                    y = woods[i].y;
-                    c = woods[i].c;
-                    color = woods[i].color;
-                    woods.Remove(woods[i]);
-                    woods.Insert(i, new Object(x, y, c, color));
+                    if (lives == 0) GameOver();
+                    Died();
+                    frog.x = Console.WindowWidth / 2;
+                    frog.y = 11;
                 }
             }
 
-            // collusion detection //////////////////////////////////
-            PrintOnPosition(frog.x = data[1], frog.y = data[2], frog.c, frog.color);// print the  frog
             foreach (var car in cars)
             {
-                carCord = car.x;
-                frogCord = frog.x;
+                int carCord = car.x;
 
                 if (car.c.Length == 3)
                 {
-                    if ((frogCord == (carCord + 1) && frog.y == car.y) || (frogCord == (carCord - 1) && frog.y == car.y) || (frogCord == (carCord - 2) && frog.y == car.y))
+                    if ((frog.x == (carCord + 1) && frog.y == car.y) || (frog.x == (carCord - 1) && frog.y == car.y) || (frog.x == (carCord - 2) && frog.y == car.y) || (frog.x == car.x && frog.y == car.y))
                     {
                         if (lives == 0) GameOver();
                         Died();
@@ -425,7 +412,7 @@ class FrogCurr
 
                 if (car.c.Length == 2)
                 {
-                    if ((frogCord == carCord && frog.y == car.y) || (frogCord == (carCord - 1) && frog.y == car.y))
+                    if ((frog.x == carCord && frog.y == car.y) || (frog.x == (carCord - 1) && frog.y == car.y))
                     {
                         if (lives == 0) GameOver();
                         Died();
@@ -436,34 +423,6 @@ class FrogCurr
             }
 
 
-            //////////////////// collusion with woods and water  ///////////
-
-            foreach (var wood in woods)
-            {
-                woodCord = wood.x;
-                frogCord = frog.x;
-
-                // TODO: FIX the collusion with water
-                if (frog.y < 7 && frog.y > 1)
-                {
-
-                    if ((frogCord == (woodCord + 1) && frog.y == wood.y) || (frogCord == (woodCord) && frog.y == wood.y) || (frogCord == (woodCord + 2) && frog.y == wood.y) ||
-                        (frogCord == (woodCord + 3) && frog.y == wood.y) || (frogCord == (woodCord + 4) && frog.y == wood.y) || (frogCord == (woodCord + 5) && frog.y == wood.y))
-                    {
-
-                        Console.WriteLine("Grrrreeeeat!");
-                        Thread.Sleep(5000);
-                    }
-                    else
-                    {
-                        if (lives == 0) GameOver();
-                        Died();
-                        frog.x = Console.WindowWidth / 2;
-                        frog.y = Console.WindowHeight - scoreWindowBuffer;
-
-                    }
-                }
-            }
 
             // print score window
             PrintOnPosition(0, Console.WindowHeight - 3, "Lives: " + lives, ConsoleColor.Cyan);
