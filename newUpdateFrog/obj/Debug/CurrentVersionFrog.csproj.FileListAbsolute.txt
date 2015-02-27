@@ -22,3 +22,9 @@ C:\Users\Stanimir\Documents\GitHub\TeamZombie-Game\newUpdateFrog\obj\Debug\Curre
 C:\Users\Stanimir\Documents\GitHub\TeamZombie-Game\newUpdateFrog\bin\Debug\CurrentVersionFrog.exe
 C:\Users\Stanimir\Documents\GitHub\TeamZombie-Game\newUpdateFrog\bin\Debug\CurrentVersionFrog.pdb
 C:\Users\Stanimir\Documents\GitHub\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.csprojResolveAssemblyReference.cache
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\TeamZombie-Game\newUpdateFrog\bin\Debug\CurrentVersionFrog.exe.config
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.exe
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.pdb
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\TeamZombie-Game\newUpdateFrog\bin\Debug\CurrentVersionFrog.exe
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\TeamZombie-Game\newUpdateFrog\bin\Debug\CurrentVersionFrog.pdb
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\TeamZombie-Game\newUpdateFrog\obj\Debug\CurrentVersionFrog.csprojResolveAssemblyReference.cache

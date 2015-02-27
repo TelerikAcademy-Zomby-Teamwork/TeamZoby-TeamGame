@@ -7,3 +7,6 @@ C:\Users\n.stefanov\Desktop\TeamZombie-Game-master\Frogger\obj\Debug\Frogger.pdb
 C:\Users\Stanimir\Documents\GitHub\TeamZombie-Game\Frogger\bin\Debug\Frogger.exe.config
 C:\Users\Stanimir\Documents\GitHub\TeamZombie-Game\Frogger\obj\Debug\Frogger.exe
 C:\Users\Stanimir\Documents\GitHub\TeamZombie-Game\Frogger\obj\Debug\Frogger.pdb
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\TeamZombie-Game\Frogger\bin\Debug\Frogger.exe.config
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\TeamZombie-Game\Frogger\obj\Debug\Frogger.exe
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\TeamZombie-Game\Frogger\obj\Debug\Frogger.pdb
