@@ -5,11 +5,13 @@ using System.Runtime.Remoting.Lifetime;
 using System.Threading;
 using System.IO;
 using System.Media;
+using System.Text;
 
 class FrogCurr
 {
     static int lives = 5;
     static int score = 0;
+    static int frogsCount = 5;
 
     public struct Object
     {
@@ -83,6 +85,7 @@ class FrogCurr
             Console.Write(new string('=', Console.WindowWidth));
         }
     }
+
     public static int[] Moves(Object frog, int[] data, int scoreWindowBuffer)
     {
         if (Console.KeyAvailable)
@@ -188,7 +191,7 @@ class FrogCurr
             }
             if (counter == 2)
             {
-                cars.Add(new Object(col, rowCounter, smallCars, ConsoleColor.White));
+                cars.Add(new Object(col, rowCounter, smallCars, ConsoleColor.Green));
             }
             col += 8;
 
@@ -217,60 +220,109 @@ class FrogCurr
         }
     }
 
+    private static bool CheckIsInHole(int x, int y, char[,] holes)
+    {
+        bool flag = false;
+        if (x == 1 && y == 1)
+        {
+            holes[1, 1] = 'X';
+            PrintOnPosition(1, 1, "X");
+            flag = true;
+        }
+        if (x == 7 && y == 1)
+        {
+            holes[1, 7] = 'X';
+            PrintOnPosition(1, 7, "X");
+            flag = true;
+        }
+        if (x == 15 && y == 1)
+        {
+            holes[1, 15] = 'X';
+            PrintOnPosition(1, 15, "X");
+            flag = true;
+        }
+        if (x == 22 && y == 1)
+        {
+            holes[1, 22] = 'X';
+            PrintOnPosition(22, 1, "X");
+            flag = true;
+        }
+        if (x == 28 && y == 1)
+        {
+            holes[1, 28] = 'X';
+            PrintOnPosition(28, 1, "X");
+            flag = true;
+        }
+        return flag;
+    }
+
     static void GameOver()
     {
-        SoundPlayer gameOver = new System.Media.SoundPlayer("GameOver.wav");
+        SoundPlayer gameOver = new System.Media.SoundPlayer(@"Files\GameOver.wav");
         gameOver.Play();
-
         Console.Clear();
         PrintOnPosition(8, 5, "Game Over!", ConsoleColor.Red);
         PrintOnPosition(6, 6, "Your score is " + score, ConsoleColor.Red);
-        PrintOnPosition(4, 7, "Press [enter] for exit", ConsoleColor.Red);
-        Console.ReadLine();
+        PrintOnPosition(2, 7, "Press enter your nickname", ConsoleColor.Red);
+        PrintOnPosition((Console.WindowWidth / 2) - 3, 8, "", ConsoleColor.Red);
+        string nickname = Console.ReadLine();
+        KeepScore(nickname, score);
         Environment.Exit(0);
     }
 
     static void Died()
-
     {
-        SoundPlayer backgroundMusic = new System.Media.SoundPlayer("Background.wav");
-
+        lives--;
+        if (lives == 0) GameOver();
+        SoundPlayer backgroundMusic = new System.Media.SoundPlayer(@"Files\Background.wav");
         backgroundMusic.Play();
         Console.Clear();
-        PrintOnPosition(10, 5, "You are dead", ConsoleColor.Red);
-        Thread.Sleep(1000);
-        lives--;
+        PrintOnPosition(12, 5, "Ouch!", ConsoleColor.Red);
+        PrintOnPosition(4, 6, "Better luck next time!", ConsoleColor.Red);
+        Thread.Sleep(400);
     }
 
     static void Lived()
     {
-        SoundPlayer backgroundMusic = new System.Media.SoundPlayer("Background.wav");
-
+        frogsCount--;
+        if (frogsCount == 0) Finish();
+        SoundPlayer backgroundMusic = new System.Media.SoundPlayer(@"Files\Background.wav");
         backgroundMusic.Play();
         Console.Clear();
         score += 50;
-        PrintOnPosition(10, 5, "Hooray!!!!", ConsoleColor.Red);
-        Thread.Sleep(500);
+        PrintOnPosition(10, 5, "Hooray!", ConsoleColor.Green);
+        PrintOnPosition(6, 6, frogsCount + " frogs to save!", ConsoleColor.Green);
+        Thread.Sleep(400);
     }
+
     static void Finish()
     {
-        SoundPlayer win = new System.Media.SoundPlayer("Win.wav");
+        SoundPlayer win = new System.Media.SoundPlayer(@"Files\Win.wav");
         win.Play();
         Console.Clear();
-        PrintOnPosition(8, 5, "You win!", ConsoleColor.Red);
-        PrintOnPosition(6, 6, "Your score is " + score, ConsoleColor.Red);
-        PrintOnPosition(4, 7, "Press [enter] for exit", ConsoleColor.Red);
-        Console.ReadLine();
+        PrintOnPosition(10, 5, "Winner!", ConsoleColor.Green);
+        PrintOnPosition(6, 6, "Your score is " + score, ConsoleColor.Green);
+        PrintOnPosition(2, 7, "Press enter your nickname", ConsoleColor.Green);
+        PrintOnPosition((Console.WindowWidth / 2) - 3, 8, "", ConsoleColor.Green);
+        string nickname = Console.ReadLine();
+        KeepScore(nickname, score);
         Environment.Exit(0);
-
     }
 
+    static void KeepScore(string name, int scores)
+    {
+        using (StreamWriter scoreBoard = new StreamWriter(@"Files\scores.txt", true, Encoding.ASCII))
+        {
+            scoreBoard.WriteLine(name);
+            scoreBoard.WriteLine(scores);
+        }
+    }
 
 
     static void Main()
     {
 
-        SoundPlayer backgroundMusic = new System.Media.SoundPlayer("Background.wav");
+        SoundPlayer backgroundMusic = new System.Media.SoundPlayer(@"Files\Background.wav");
         backgroundMusic.Play();
         Console.BufferHeight = Console.WindowHeight = 22;
         Console.BufferWidth = Console.WindowWidth = 30;
@@ -281,7 +333,6 @@ class FrogCurr
         bool[] holesToFill = new bool[5];
 
         int scoreWindowBuffer = 4;
-        int rockField = 9;
 
         Object frog = new Object();
         frog.x = Console.WindowWidth / 2;
@@ -304,16 +355,12 @@ class FrogCurr
 
         while (true)
         {
-
-
-
             // Move frog
             Moves(frog, data, scoreWindowBuffer);
             if (data[0] == 1)//chek for exit 0=exit
             {
                 return;
             }
-
 
             // Rocks
             Object newRock = new Object();
@@ -335,12 +382,6 @@ class FrogCurr
 
                 movingRocks.c = oldRock.c;
                 movingRocks.color = oldRock.color;
-                if (movingRocks.c == "#" && oldRock.y == frog.y && oldRock.x == frog.x)
-                {
-                    if (lives == 0) GameOver();
-                    Died();
-
-                }
                 if (movingRocks.y < Console.WindowHeight)
                 {
                     newList.Add(movingRocks);
@@ -348,14 +389,10 @@ class FrogCurr
             }
             rocks = newList;
 
-
-
             Console.Clear();
             DrawTheGrass(grass);// print grass
             DrawSafetyZone(scoreWindowBuffer);// print save zone 
             DrawWater();//draw water
-
-
 
             // Print the rocks
             foreach (Object rock in rocks)
@@ -376,7 +413,6 @@ class FrogCurr
                 cars.Remove(cars[i]);
                 cars.Insert(i, new Object(x, y, c, color));
             }
-
 
             // check if the car is in the end of the console window and print it in the begging of the console. remove car and add other with new cordinates//
             for (int i = 0; i < cars.Count; i++)
@@ -402,11 +438,9 @@ class FrogCurr
 
                 if ((frog.x == rockCord && frog.y == rock.y) || (frog.x == rockCord + 1 && frog.y == rock.y) || (frog.x == rockCord + 2 && frog.y == rock.y))
                 {
-                    if (lives == 0) GameOver();
                     Died();
                     frog.x = Console.WindowWidth / 2;
                     frog.y = Console.WindowHeight - scoreWindowBuffer;
-
                 }
             }
 
@@ -418,11 +452,9 @@ class FrogCurr
                 {
                     if ((frog.x == (carCord + 1) && frog.y == car.y) || (frog.x == (carCord - 1) && frog.y == car.y) || (frog.x == (carCord - 2) && frog.y == car.y) || (frog.x == car.x && frog.y == car.y))
                     {
-                        if (lives == 0) GameOver();
                         Died();
                         frog.x = Console.WindowWidth / 2;
                         frog.y = Console.WindowHeight - scoreWindowBuffer;
-
                     }
                 }
 
@@ -430,14 +462,14 @@ class FrogCurr
                 {
                     if ((frog.x == carCord && frog.y == car.y) || (frog.x == (carCord - 1) && frog.y == car.y))
                     {
-                        if (lives == 0) GameOver();
                         Died();
                         frog.x = Console.WindowWidth / 2;
                         frog.y = Console.WindowHeight - scoreWindowBuffer;
-
                     }
                 }
             }
+
+            // Save the frogs
             CheckIsInHole(frog.x, frog.y, grass);
             if (CheckIsInHole(frog.x, frog.y, grass) == true)
             {
@@ -477,20 +509,8 @@ class FrogCurr
                     frog.y = Console.WindowHeight - scoreWindowBuffer;
                     holesToFill[4] = true;
                 }
+            }
 
-            }
-            int count = 0;
-            foreach (var hole in holesToFill)
-            {
-                if (hole == true)
-                {
-                    count++;
-                }
-            }
-            if (count == 5)
-            {
-                Finish();
-            }
             // print score window
             PrintOnPosition(0, Console.WindowHeight - 3, "Lives: " + lives, ConsoleColor.Cyan);
             PrintOnPosition(0, Console.WindowHeight - 2, "Score: " + score, ConsoleColor.Cyan);
@@ -499,39 +519,5 @@ class FrogCurr
         }
     }
 
-    private static bool CheckIsInHole(int x, int y, char[,] holes)
-    {
-        bool flag = false;
-        if (x == 1 && y == 1)
-        {
-            holes[1, 1] = 'X';
-            PrintOnPosition(1, 1, "X");
-            flag = true;
-        }
-        if (x == 7 && y == 1)
-        {
-            holes[1, 7] = 'X';
-            PrintOnPosition(1, 7, "X");
-            flag = true;
-        }
-        if (x == 15 && y == 1)
-        {
-            holes[1, 15] = 'X';
-            PrintOnPosition(1, 15, "X");
-            flag = true;
-        }
-        if (x == 22 && y == 1)
-        {
-            holes[1, 22] = 'X';
-            PrintOnPosition(22, 1, "X");
-            flag = true;
-        }
-        if (x == 28 && y == 1)
-        {
-            holes[1, 28] = 'X';
-            PrintOnPosition(28, 1, "X");
-            flag = true;
-        }
-        return flag;
-    }
+
 }

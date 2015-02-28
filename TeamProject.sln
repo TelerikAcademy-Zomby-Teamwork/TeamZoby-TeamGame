@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstVersion", "Frogger\FirstVersion.csproj", "{6477617A-CBD0-4924-8D15-78906789642C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondVersion", "CurrentVersionFrog\SecondVersion.csproj", "{F2BE2849-7034-4254-A74B-007100C047D6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrentVersionFrog", "newUpdateFrog\CurrentVersionFrog.csproj", "{1259BD7B-8F85-4DF7-8094-34E59129A090}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Froggie", "newUpdateFrog\Froggie.csproj", "{1259BD7B-8F85-4DF7-8094-34E59129A090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6477617A-CBD0-4924-8D15-78906789642C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6477617A-CBD0-4924-8D15-78906789642C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6477617A-CBD0-4924-8D15-78906789642C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6477617A-CBD0-4924-8D15-78906789642C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2BE2849-7034-4254-A74B-007100C047D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2BE2849-7034-4254-A74B-007100C047D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2BE2849-7034-4254-A74B-007100C047D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2BE2849-7034-4254-A74B-007100C047D6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Release|Any CPU.ActiveCfg = Release|Any CPU

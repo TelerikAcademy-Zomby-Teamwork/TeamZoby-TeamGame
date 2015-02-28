@@ -1,3 +1,0 @@
-C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\CurrentVersionFrog\bin\Debug\CurrentVersionFrog.exe.config
-C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\CurrentVersionFrog\obj\Debug\CurrentVersionFrog.exe
-C:\Users\Nikolay\Documents\GitHub\TeamZombie-Game\CurrentVersionFrog\obj\Debug\CurrentVersionFrog.pdb
