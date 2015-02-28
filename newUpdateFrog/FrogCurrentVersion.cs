@@ -97,16 +97,31 @@ class FrogCurr
             }
             if (pressedKey.Key == ConsoleKey.Escape)
             {
+                Console.Clear();
                 PrintOnPosition(10, 7, @"
-    Paused
-    Any key ---> Continue.
-    Q ---> Quit.", ConsoleColor.Red);
+Paused
+
+[space]     --> Show scores.
+[enter]     --> Continue.
+[Backspace] --> Quit.
+[F1]        --> Show controls."
+                    , ConsoleColor.Blue);
                 pressedKey = Console.ReadKey();
-                if (pressedKey.Key == ConsoleKey.C)
+                if (pressedKey.Key == ConsoleKey.Spacebar)
+                {
+                    ShowScore();
+                    pressedKey = Console.ReadKey();
+                }
+                if (pressedKey.Key == ConsoleKey.F1)
+                {
+                    ShowControls();
+                    pressedKey = Console.ReadKey();
+                }
+                if (pressedKey.Key == ConsoleKey.Enter)
                 {
                     data[0] = 0;
                 }
-                if (pressedKey.Key == ConsoleKey.Q)
+                if (pressedKey.Key == ConsoleKey.Backspace)
                 {
                     Console.WriteLine();
                     data[0] = 1;
@@ -318,10 +333,44 @@ class FrogCurr
         }
     }
 
+    static void ShowScore()
+    {
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        using (StreamReader readScoreFile = new StreamReader(@"Files\scores.txt"))
+        {
+            Console.Clear();
+            int lineNumber = 0;
+            string line = readScoreFile.ReadLine();
+            while (line != null)
+            {
+                lineNumber++;
+                Console.WriteLine(line);
+                line = readScoreFile.ReadLine();
+            }
+            Console.WriteLine("Press [enter] for continue.");
+        }
+    }
+
+    static void ShowControls()
+    {
+        Console.ForegroundColor = ConsoleColor.White;
+        using (StreamReader readControlsFile = new StreamReader(@"Files\controls.txt"))
+        {
+            Console.Clear();
+            int lineNumber = 0;
+            string line = readControlsFile.ReadLine();
+            while (line != null)
+            {
+                lineNumber++;
+                Console.WriteLine(line);
+                line = readControlsFile.ReadLine();
+            }
+            Console.WriteLine("Press [enter] for continue.");
+        }
+    }
 
     static void Main()
     {
-
         SoundPlayer backgroundMusic = new System.Media.SoundPlayer(@"Files\Background.wav");
         backgroundMusic.Play();
         Console.BufferHeight = Console.WindowHeight = 22;
@@ -512,6 +561,9 @@ class FrogCurr
             }
 
             // print score window
+            PrintOnPosition(Console.WindowWidth / 2, Console.WindowHeight - 3, "Press [ESC]" , ConsoleColor.Blue);
+            PrintOnPosition(Console.WindowWidth / 2, Console.WindowHeight - 2, "for main menu", ConsoleColor.Blue);
+             
             PrintOnPosition(0, Console.WindowHeight - 3, "Lives: " + lives, ConsoleColor.Cyan);
             PrintOnPosition(0, Console.WindowHeight - 2, "Score: " + score, ConsoleColor.Cyan);
 

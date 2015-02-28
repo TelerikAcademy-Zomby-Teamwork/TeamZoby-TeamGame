@@ -1,0 +1,8 @@
+[ESC]		Pause menu
+[UpArrow]	Move up
+[DownArrow] 	Move down
+[LeftArrow]    	Move left
+[RightArrow]   	Move right
+[Spacebar]	Jump 2 spaces up
+[B]		Jump 2 spaces down
+
