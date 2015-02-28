@@ -1,0 +1,6 @@
+C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\Frog\bin\Debug\Frog.exe.config
+C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\Frog\obj\Debug\Frog.csprojResolveAssemblyReference.cache
+C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\Frog\bin\Debug\Frog.exe
+C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\Frog\bin\Debug\Frog.pdb
+C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\Frog\obj\Debug\Frog.exe
+C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\Frog\obj\Debug\Frog.pdb
