@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Frogger
@@ -15,6 +15,7 @@ namespace Frogger
         private const int PLAYGROUND_HEIGHT = ROWS_WITH_CARS_COUNT + ROWS_WITH_WATER_COUNT + 4;
         private const int CARS_PER_ROW_COUNT = 3;
         private const int TREES_PER_ROW_COUNT = 4;
+        private const int REFRESH_TIME = 1000;
 
         private bool TryIsOver;
         private bool FrogPositioned;
@@ -53,6 +54,7 @@ namespace Frogger
                     this.PressedKeysProvider.ClearInput();
                     if (this.FrogPositioned)
                     {
+                        this.FrogPositioned = false;
                         this.Figures.Add(this.Frog);
                         this.InitializeFrog();
                     }
@@ -69,7 +71,7 @@ namespace Frogger
                 }
                 else
                 {
-                    Thread.Sleep(350);
+                    Thread.Sleep(REFRESH_TIME);
                 }
             }
         }
@@ -155,6 +157,31 @@ namespace Frogger
                     return;
                 }
             }
+
+            Tree treeWithFrog = this.Figures.OfType<Tree>().SingleOrDefault(tree =>
+                    tree.Y == this.Frog.Y &&
+                    tree.X <= this.Frog.X &&
+                    tree.X + tree.Body[0].Length >= this.Frog.X + this.Frog.Body[0].Length);
+            if (treeWithFrog != null)
+            {
+                switch (treeWithFrog.Direction)
+                {
+                    case Direction.LEFT:
+                        {
+                            this.Frog.PlaceAt(this.Frog.X - treeWithFrog.Speed, this.Frog.Y);
+                            break;
+                        }
+                    case Direction.RIGHT:
+                        {
+                            this.Frog.PlaceAt(this.Frog.X + treeWithFrog.Speed, this.Frog.Y);
+                            break;
+                        }
+                    default:
+                        {
+                            throw new NotSupportedException("Tree direction not supported.");
+                        }
+                }
+            }
         }
 
         private void CheckGameOver()
@@ -167,12 +194,17 @@ namespace Frogger
                 return;
             }
 
-            bool frogDied = this.CollisionDispater.DetectCollisions(this.Frog, this.Figures, this.Terrains);
+            bool frogDied = this.IsFrogOutOfRange() || this.CollisionDispater.DetectCollisions(this.Frog, this.Figures, this.Terrains);
             if (frogDied)
             {
                 this.TryIsOver = true;
                 this.FrogPositioned = false;
             }
+        }
+
+        private bool IsFrogOutOfRange()
+        {
+            return this.Frog.X < 0 || this.Frog.Y < 0 || this.Frog.X >= this.Renderer.Width || this.Frog.Y >= PLAYGROUND_HEIGHT;
         }
 
         private void GameOver(bool playerWins)
@@ -206,7 +238,7 @@ namespace Frogger
                     Figures.Add(new Tree((this.Renderer.Width * j) / TREES_PER_ROW_COUNT + length, 2 + i, length, color, i % 3 + 1, direction));
                 }
             }
- 
+
             for (int i = 0; i < ROWS_WITH_CARS_COUNT; i++)
             {
                 for (int j = 0; j < CARS_PER_ROW_COUNT; j++)
@@ -217,7 +249,7 @@ namespace Frogger
                     Figures.Add(new Car((this.Renderer.Width * j) / CARS_PER_ROW_COUNT + length, PLAYGROUND_HEIGHT - 2 - i, length, color, i % 3 + 1, direction));
                 }
             }
-            
+
             for (int i = 4; i < 30; i += 7)
             {
                 this.Figures.Add(new WinArea(i, 1));
