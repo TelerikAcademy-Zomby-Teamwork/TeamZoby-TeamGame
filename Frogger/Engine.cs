@@ -28,18 +28,18 @@ namespace Frogger
         private CollisionDispater CollisionDispater;
         private Highscore Highscore;
 
-        public Engine(IRenderer renderer)
+        public Engine(IRenderer renderer, Highscore highscore, Player player)
         {
             this.TryIsOver = false;
             this.FrogPositioned = false;
             this.Renderer = renderer;
-            this.Player = new Player("Tea");
+            this.Player = player;
             this.PressedKeysProvider = new PressedKeysProvider();
             this.CollisionDispater = new CollisionDispater();
             this.InitializeFrog();
             this.InitializeFigures();
             this.InitializeTerrains();
-            this.Highscore = new Highscore("highscore.txt");
+            this.Highscore = highscore;
         }
 
         public void Start()
@@ -227,18 +227,24 @@ namespace Frogger
 
         private void GameOver(bool playerWins)
         {
+            this.Renderer.Clear();
             if (playerWins)
             {
                 this.Player.Score += this.Player.LivesCount * 100;
-                this.Renderer.ShowMessage("You Win!");
+                this.ShowCenteredMessage("You Win!", this.Renderer.Height / 2 - 1);
             }
             else
             {
-                this.Renderer.ShowMessage("Game Over!");
+                this.ShowCenteredMessage("Game Over!", this.Renderer.Height / 2 - 1);
             }
-            this.Renderer.ShowMessage(String.Format("Final score {0}!", this.Player.Score));
+            this.ShowCenteredMessage(String.Format("Final score: {0}", this.Player.Score), this.Renderer.Height / 2 + 1);
             this.Highscore.AddHighscoreEntry(this.Player);
             this.Highscore.Persist();
+        }
+
+        private void ShowCenteredMessage(string message, int row)
+        {
+            this.Renderer.ShowMessage(Math.Max(this.Renderer.Width / 2 - message.Length / 2, 0), row, message);
         }
 
         private void InitializeFrog()

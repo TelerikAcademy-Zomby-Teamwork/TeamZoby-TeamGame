@@ -66,6 +66,7 @@
     <Compile Include="Figure.cs" />
     <Compile Include="Frog.cs" />
     <Compile Include="Highscore.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="PassableLandTerrain.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="IRenderer.cs" />

@@ -15,7 +15,7 @@ namespace Frogger
         }
 
         private List<Player> highscoreEntries;
-        List<Player> HighscoreEntries
+        public List<Player> HighscoreEntries
         {
             get
             {
@@ -35,7 +35,7 @@ namespace Frogger
                     string line = null;
                     while ((line = reader.ReadLine()) != null)
                     {
-                        Player player = new Player(line.Substring(0, 20).Trim(), int.Parse(line.Substring(20, 10).Trim()));
+                        Player player = new Player(line.Substring(0, 15).Trim(), int.Parse(line.Substring(15, 10).Trim()));
                         this.highscoreEntries.Add(player);
                     }
                     return this.highscoreEntries;
@@ -65,7 +65,7 @@ namespace Frogger
             {
                 foreach (Player entry in this.HighscoreEntries)
                 {
-                    writer.WriteLine("{0, -20}{1, 10}", entry.Name, entry.Score);
+                    writer.WriteLine("{0, -15}{1, 10}", entry.Name, entry.Score);
                 }
             }
         }

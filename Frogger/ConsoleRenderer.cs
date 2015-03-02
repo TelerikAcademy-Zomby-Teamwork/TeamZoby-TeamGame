@@ -67,12 +67,6 @@ namespace Frogger
             }
         }
 
-        public void ShowMessage(string message)
-        {
-            this.Clear();
-            this.ShowMessage(Math.Max(Width / 2 - message.Length / 2, 0), Height / 2, message);
-        }
-
         public void ShowMessage(int x, int y, string message)
         {
             Console.ForegroundColor = ConsoleColor.White;
