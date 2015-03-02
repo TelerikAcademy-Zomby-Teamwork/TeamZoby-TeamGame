@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Threading;
 
 namespace Frogger
@@ -15,7 +16,11 @@ namespace Frogger
         private const int PLAYGROUND_HEIGHT = ROWS_WITH_CARS_COUNT + ROWS_WITH_WATER_COUNT + 4;
         private const int CARS_PER_ROW_COUNT = 3;
         private const int TREES_PER_ROW_COUNT = 4;
-        private const int REFRESH_TIME = 1000;
+        private const int REFRESH_TIME = 500;
+
+        private const string BACKGROUND_MUSIC_FILE_PATH = "music/Background.wav";
+        private const string WIN_MUSIC_FILE_PATH = "music/Win.wav";
+        private const string LOSE_MUSIC_FILE_PATH = "music/Lose.wav";
 
         private bool TryIsOver;
         private bool FrogPositioned;
@@ -44,6 +49,7 @@ namespace Frogger
 
         public void Start()
         {
+            this.PlaySound(BACKGROUND_MUSIC_FILE_PATH);
             while (true)
             {
                 this.TryIsOver = false;
@@ -63,7 +69,7 @@ namespace Frogger
                         this.FrogPositioned = false;
                         this.Player.Score += 100;
                         this.Figures.Add(this.Frog);
-                        if (this.PlayerWon())
+                        if (this.HasPlayerWon())
                         {
                             this.GameOver(true);
                             return;
@@ -215,7 +221,7 @@ namespace Frogger
             }
         }
 
-        private bool PlayerWon()
+        private bool HasPlayerWon()
         {
             return this.Figures.OfType<WinArea>().Count() == 0;
         }
@@ -232,10 +238,12 @@ namespace Frogger
             {
                 this.Player.Score += this.Player.LivesCount * 100;
                 this.ShowCenteredMessage("You Win!", this.Renderer.Height / 2 - 1);
+                this.PlaySound(WIN_MUSIC_FILE_PATH);
             }
             else
             {
                 this.ShowCenteredMessage("Game Over!", this.Renderer.Height / 2 - 1);
+                this.PlaySound(LOSE_MUSIC_FILE_PATH);
             }
             this.ShowCenteredMessage(String.Format("Final score: {0}", this.Player.Score), this.Renderer.Height / 2 + 1);
             this.Highscore.AddHighscoreEntry(this.Player);
@@ -299,6 +307,12 @@ namespace Frogger
             this.Renderer.ShowMessage(0, TOTAL_HEIGHT - PLAYER_INFO_FIELD_HEIGHT + 0, String.Format("Player: {0}", this.Player.Name));
             this.Renderer.ShowMessage(0, TOTAL_HEIGHT - PLAYER_INFO_FIELD_HEIGHT + 1, String.Format("Score: {0}", this.Player.Score));
             this.Renderer.ShowMessage(0, TOTAL_HEIGHT - PLAYER_INFO_FIELD_HEIGHT + 2, String.Format("Lives: {0}", this.Player.LivesCount));
+        }
+
+        private void PlaySound(string filePath)
+        {
+            SoundPlayer player = new SoundPlayer(filePath);
+            player.Play();
         }
     }
 }

@@ -14,11 +14,11 @@ namespace Frogger
         private Player Player;
         private Highscore Highscore;
 
-        public Menu(IRenderer renderer, string fileName)
+        public Menu(IRenderer renderer, string highscoreFilePath)
         {
             this.Renderer = renderer;
             this.Player = new Player(this.RetrievePlayerName());
-            this.Highscore = new Highscore(fileName);
+            this.Highscore = new Highscore(highscoreFilePath);
         }
 
         public void Open()
@@ -67,6 +67,7 @@ namespace Frogger
                         }
                     case 3:
                         {
+                            this.Renderer.Clear();
                             return;
                         }
                     default:

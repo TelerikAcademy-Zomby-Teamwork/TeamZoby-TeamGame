@@ -8,7 +8,7 @@ namespace Frogger
     {
         private const int MAX_NUMBER_OF_ENTRIES = 5;
 
-        public string FileName
+        public string FilePath
         {
             get;
             private set;
@@ -25,12 +25,12 @@ namespace Frogger
                 }
 
                 this.highscoreEntries = new List<Player>();
-                if(!File.Exists(this.FileName))
+                if(!File.Exists(this.FilePath))
                 {
-                    File.Create(this.FileName).Close();
+                    File.Create(this.FilePath).Close();
                     
                 }
-                using (StreamReader reader = new StreamReader(this.FileName))
+                using (StreamReader reader = new StreamReader(this.FilePath))
                 {
                     string line = null;
                     while ((line = reader.ReadLine()) != null)
@@ -47,9 +47,9 @@ namespace Frogger
             }
         }
 
-        public Highscore(string filename)
+        public Highscore(string filePath)
         {
-            this.FileName = filename;
+            this.FilePath = filePath;
         }
 
         public void AddHighscoreEntry(Player player)
@@ -61,7 +61,7 @@ namespace Frogger
 
         public void Persist()
         {
-            using (StreamWriter writer = new StreamWriter(this.FileName))
+            using (StreamWriter writer = new StreamWriter(this.FilePath))
             {
                 foreach (Player entry in this.HighscoreEntries)
                 {

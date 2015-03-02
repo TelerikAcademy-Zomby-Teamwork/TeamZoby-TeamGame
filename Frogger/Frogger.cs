@@ -8,7 +8,6 @@ namespace Frogger
         {
             Menu menu = new Menu(new ConsoleRenderer(), "highscore.txt");
             menu.Open();
-            Console.SetCursorPosition(0, 17);
         }
     }
 }
