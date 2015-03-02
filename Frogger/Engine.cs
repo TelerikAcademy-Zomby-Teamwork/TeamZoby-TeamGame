@@ -49,7 +49,7 @@ namespace Frogger
 
         public void Start()
         {
-            this.PlaySound(BACKGROUND_MUSIC_FILE_PATH);
+            this.PlaySound(BACKGROUND_MUSIC_FILE_PATH, true);
             while (true)
             {
                 this.TryIsOver = false;
@@ -309,10 +309,17 @@ namespace Frogger
             this.Renderer.ShowMessage(0, TOTAL_HEIGHT - PLAYER_INFO_FIELD_HEIGHT + 2, String.Format("Lives: {0}", this.Player.LivesCount));
         }
 
-        private void PlaySound(string filePath)
+        private void PlaySound(string filePath, bool loop = false)
         {
             SoundPlayer player = new SoundPlayer(filePath);
-            player.Play();
+            if (loop)
+            {
+                player.PlayLooping();
+            }
+            else
+            {
+                player.Play();
+            }
         }
     }
 }
