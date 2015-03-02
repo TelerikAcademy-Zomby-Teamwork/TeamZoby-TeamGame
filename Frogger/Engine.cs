@@ -26,6 +26,7 @@ namespace Frogger
         private List<Terrain> Terrains;
         private PressedKeysProvider PressedKeysProvider;
         private CollisionDispater CollisionDispater;
+        private Highscore Highscore;
 
         public Engine(IRenderer renderer)
         {
@@ -38,6 +39,7 @@ namespace Frogger
             this.InitializeFrog();
             this.InitializeFigures();
             this.InitializeTerrains();
+            this.Highscore = new Highscore("highscore.txt");
         }
 
         public void Start()
@@ -48,14 +50,24 @@ namespace Frogger
                 Renderer.Clear();
                 this.Update();
                 this.Draw();
-                this.CheckGameOver();
+                // not already determined while moving the frog by the player
+                if (!this.TryIsOver)
+                {
+                    this.CheckTryOver();
+                }
                 if (this.TryIsOver)
                 {
                     this.PressedKeysProvider.ClearInput();
                     if (this.FrogPositioned)
                     {
                         this.FrogPositioned = false;
+                        this.Player.Score += 100;
                         this.Figures.Add(this.Frog);
+                        if (this.PlayerWon())
+                        {
+                            this.GameOver(true);
+                            return;
+                        }
                         this.InitializeFrog();
                     }
                     else
@@ -151,7 +163,7 @@ namespace Frogger
 
                 }
 
-                this.CheckGameOver();
+                this.CheckTryOver();
                 if (this.TryIsOver)
                 {
                     return;
@@ -184,13 +196,14 @@ namespace Frogger
             }
         }
 
-        private void CheckGameOver()
+        private void CheckTryOver()
         {
-            bool reachedWinArea = this.Figures.OfType<WinArea>().Any(winArea => winArea.X == this.Frog.X && winArea.Y == this.Frog.Y);
-            if (reachedWinArea)
+            WinArea reachedWinArea = this.Figures.OfType<WinArea>().SingleOrDefault(winArea => winArea.X == this.Frog.X && winArea.Y == this.Frog.Y);
+            if (reachedWinArea != null)
             {
                 this.TryIsOver = true;
                 this.FrogPositioned = true;
+                this.Figures.Remove(reachedWinArea);
                 return;
             }
 
@@ -202,6 +215,11 @@ namespace Frogger
             }
         }
 
+        private bool PlayerWon()
+        {
+            return this.Figures.OfType<WinArea>().Count() == 0;
+        }
+
         private bool IsFrogOutOfRange()
         {
             return this.Frog.X < 0 || this.Frog.Y < 0 || this.Frog.X >= this.Renderer.Width || this.Frog.Y >= PLAYGROUND_HEIGHT;
@@ -211,12 +229,16 @@ namespace Frogger
         {
             if (playerWins)
             {
+                this.Player.Score += this.Player.LivesCount * 100;
                 this.Renderer.ShowMessage("You Win!");
             }
             else
             {
                 this.Renderer.ShowMessage("Game Over!");
             }
+            this.Renderer.ShowMessage(String.Format("Final score {0}!", this.Player.Score));
+            this.Highscore.AddHighscoreEntry(this.Player);
+            this.Highscore.Persist();
         }
 
         private void InitializeFrog()
