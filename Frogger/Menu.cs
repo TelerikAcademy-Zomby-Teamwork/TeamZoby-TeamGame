@@ -48,7 +48,7 @@ namespace Frogger
                 {
                     case 1:
                         {
-                            Engine engine = new Engine(this.Renderer, this.Highscore, this.Player);
+                            Engine engine = new Engine(this.Renderer, this.Highscore, new Player(this.Player.Name));
                             engine.Start();
                             Console.ReadKey();
                             break;
