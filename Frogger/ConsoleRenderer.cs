@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Frogger
 {
@@ -36,6 +37,7 @@ namespace Frogger
         public ConsoleRenderer(int width = 30, int height = 18)
         {
             this.Initialize(width, height);
+            Console.OutputEncoding = Encoding.Unicode;
         }
 
         public void DrawPixel(int x, int y, char symbol, ConsoleColor color)
