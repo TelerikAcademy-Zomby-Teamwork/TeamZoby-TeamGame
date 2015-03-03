@@ -12,6 +12,7 @@ class FrogCurr
     static int lives = 5;
     static int score = 0;
     static int frogsCount = 5;
+    static int speed = 300;
 
     public struct Object
     {
@@ -297,20 +298,21 @@ Paused
         Thread.Sleep(400);
     }
 
-    static void Lived()
+    static void Lived(char[,] grass,bool[] holes)
     {
         frogsCount--;
-        if (frogsCount == 0) Finish();
+        score += 50;
+        if (frogsCount == 0) Finish(grass,holes);
         SoundPlayer backgroundMusic = new System.Media.SoundPlayer(@"Files\Background.wav");
         backgroundMusic.Play();
         Console.Clear();
-        score += 50;
+       
         PrintOnPosition(10, 5, "Hooray!", ConsoleColor.Green);
         PrintOnPosition(6, 6, frogsCount + " frogs to save!", ConsoleColor.Green);
         Thread.Sleep(400);
     }
 
-    static void Finish()
+    static void Finish(char[,]grass,bool[] holes)
     {
         SoundPlayer win = new System.Media.SoundPlayer(@"Files\Win.wav");
         win.Play();
@@ -321,7 +323,24 @@ Paused
         PrintOnPosition((Console.WindowWidth / 2) - 3, 8, "", ConsoleColor.Green);
         string nickname = Console.ReadLine();
         KeepScore(nickname, score);
-        Environment.Exit(0);
+       
+        speed -= 100;
+        Console.WriteLine("Welcome to the next level......... :) ");
+        Thread.Sleep(600);
+          lives = 5;
+          grass[1, 1] = ' ';
+          grass[1, 7] = ' ';
+          grass[1, 15] = ' ';
+          grass[1, 22] = ' ';
+          grass[1, 28] =' ';
+          holes[0] = false;
+          holes[1] = false;
+          holes[2] = false;
+          holes[3] = false;
+          holes[4] = false;
+         
+          frogsCount = 5;
+       // Environment.Exit(0);
     }
 
     static void KeepScore(string name, int scores)
@@ -371,6 +390,7 @@ Paused
 
     static void Main()
     {
+       
         SoundPlayer backgroundMusic = new System.Media.SoundPlayer(@"Files\Background.wav");
         backgroundMusic.Play();
         Console.BufferHeight = Console.WindowHeight = 22;
@@ -481,7 +501,7 @@ Paused
             PrintOnPosition(frog.x = data[1], frog.y = data[2], frog.c, frog.color);
 
             //collusion detection//////////////////////////////////
-            foreach (var rock in rocks)
+           foreach (var rock in rocks)
             {
                 int rockCord = rock.x;
 
@@ -524,21 +544,21 @@ Paused
             {
                 if (grass[1, 1] == 'X' && !holesToFill[0])
                 {
-                    Lived();
+                    Lived(grass, holesToFill);
                     frog.x = Console.WindowWidth / 2;
                     frog.y = Console.WindowHeight - scoreWindowBuffer;
                     holesToFill[0] = true;
                 }
                 if (grass[1, 7] == 'X' && !holesToFill[1])
                 {
-                    Lived();
+                    Lived(grass, holesToFill);
                     frog.x = Console.WindowWidth / 2;
                     frog.y = Console.WindowHeight - scoreWindowBuffer;
                     holesToFill[1] = true;
                 }
                 if (grass[1, 15] == 'X' && !holesToFill[2])
                 {
-                    Lived();
+                    Lived(grass, holesToFill);
                     frog.x = Console.WindowWidth / 2;
                     frog.y = Console.WindowHeight - scoreWindowBuffer;
                     holesToFill[2] = true;
@@ -546,14 +566,14 @@ Paused
 
                 if (grass[1, 22] == 'X' && !holesToFill[3])
                 {
-                    Lived();
+                    Lived(grass,holesToFill);
                     frog.x = Console.WindowWidth / 2;
                     frog.y = Console.WindowHeight - scoreWindowBuffer;
                     holesToFill[3] = true;
                 }
                 if (grass[1, 28] == 'X' && !holesToFill[4])
                 {
-                    Lived();
+                    Lived(grass,holesToFill);
                     frog.x = Console.WindowWidth / 2;
                     frog.y = Console.WindowHeight - scoreWindowBuffer;
                     holesToFill[4] = true;
@@ -567,7 +587,7 @@ Paused
             PrintOnPosition(0, Console.WindowHeight - 3, "Lives: " + lives, ConsoleColor.Cyan);
             PrintOnPosition(0, Console.WindowHeight - 2, "Score: " + score, ConsoleColor.Cyan);
 
-            Thread.Sleep(300);
+            Thread.Sleep(speed);
         }
     }
 

@@ -4,3 +4,9 @@ C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\F
 C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\Frogger\obj\Debug\Frogger.csprojResolveAssemblyReference.cache
 C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\Frogger\obj\Debug\Frogger.exe
 C:\Users\Rodotea\Documents\Visual Studio 2012\Projects\telerik\TeamZombie-Game\Frogger\obj\Debug\Frogger.pdb
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\Frogger\bin\Debug\Frogger.exe.config
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\Frogger\obj\Debug\Frogger.exe
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\Frogger\obj\Debug\Frogger.pdb
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\Frogger\bin\Debug\Frogger.exe
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\Frogger\bin\Debug\Frogger.pdb
+C:\Users\Тито\Desktop\Telerik\TeamZombie-Game\Frogger\obj\Debug\Frogger.csprojResolveAssemblyReference.cache
