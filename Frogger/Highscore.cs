@@ -30,15 +30,25 @@ namespace Frogger
                     File.Create(this.FilePath).Close();
                     
                 }
-                using (StreamReader reader = new StreamReader(this.FilePath))
+                try
                 {
-                    string line = null;
-                    while ((line = reader.ReadLine()) != null)
+                    using (StreamReader reader = new StreamReader(this.FilePath))
                     {
-                        Player player = new Player(line.Substring(0, 15).Trim(), int.Parse(line.Substring(15, 10).Trim()));
-                        this.highscoreEntries.Add(player);
+                        string line = null;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            Player player = new Player(line.Substring(0, 15).Trim(), int.Parse(line.Substring(15, 10).Trim()));
+                            this.highscoreEntries.Add(player);
+                        }
+                        return this.highscoreEntries;
                     }
-                    return this.highscoreEntries;
+                }
+                catch (IOException)
+                {
+                    // ignore the exception and show empty highscore
+                    System.Console.WriteLine("There was problem loading the highscore.");
+                    return new List<Player>();
+                    //System.Environment.Exit(0);
                 }
             }
             set

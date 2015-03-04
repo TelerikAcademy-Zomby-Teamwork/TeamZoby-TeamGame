@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Froggie", "newUpdateFrog\Froggie.csproj", "{1259BD7B-8F85-4DF7-8094-34E59129A090}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frogger", "Frogger\Frogger.csproj", "{2F1591F9-FC50-4B3B-8306-6C6E5B41559C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Froggie", "newUpdateFrog\Froggie.csproj", "{1259BD7B-8F85-4DF7-8094-34E59129A090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F1591F9-FC50-4B3B-8306-6C6E5B41559C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F1591F9-FC50-4B3B-8306-6C6E5B41559C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F1591F9-FC50-4B3B-8306-6C6E5B41559C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F1591F9-FC50-4B3B-8306-6C6E5B41559C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1259BD7B-8F85-4DF7-8094-34E59129A090}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
